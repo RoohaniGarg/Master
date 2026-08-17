@@ -1,0 +1,57 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+
+
+int main() {
+	int n;
+	cin >> n;
+	int a[n];
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	int pre[n + 1];
+	pre[0] = a[0];
+	int maxi = 0;
+	int mini = 0;
+	if (pre[0] < mini) {
+		mini = pre[0];
+	}
+	if (pre[0] > maxi) {
+		maxi = pre[0];
+	}
+	for (int i = 1; i < n; i++) {
+		pre[i] = pre[i - 1] + a[i];
+		if (pre[i] > maxi) {
+			maxi = pre[i];
+		}
+		if (pre[i] < mini) {
+			mini = pre[i];
+		}
+	}
+	int freq[maxi - mini + 1] {};
+	for (int i = 0; i < n; i++) {
+		int ce = pre[i];
+		int us = ce - mini;
+		freq[us] += 1;
+	}
+	/*for (int i = 1; i < n; i++) {
+		if (freq[i] > 1) {
+			cout << "yes" << endl;
+		}
+
+	}
+	if (freq[0] > 0) {
+		cout << "yes" << endl;
+	}*/
+
+	freq[0 - mini] += 1;
+	for (int i = 0; i < maxi - mini + 1; i++) {
+		if (freq[i] > 1) {
+			cout << "yes" << endl;
+			return 0;
+		}
+	}
+	cout << "no" << endl;
+	return 0;
+}
